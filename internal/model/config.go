@@ -11,7 +11,7 @@ type CheckConfig struct {
 	Fix      string            `yaml:"fix"`
 }
 
-//this is the type for the global clonesage config in its yaml file
+// this is the type for the global clonesage config in its yaml file
 type ClonesageConfig struct {
 	Version  int                    `yaml:"version"`
 	Defaults map[string]interface{} `yaml:"defaults"`

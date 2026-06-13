@@ -7,18 +7,18 @@ import (
 	"strings"
 )
 
-//looks for the filename to verify that it exists
-func fileExists(filePath string) bool{
+// looks for the filename to verify that it exists
+func fileExists(filePath string) bool {
 	file, err := os.Stat(filePath)
-	if err != nil{
+	if err != nil {
 		fmt.Println("There file is not accessible", err)
 	}
 
 	return !file.IsDir()
 }
 
-//extract the env keys from the .env.example file
-func extractEnvKeys(filePath string) []string{
+// extract the env keys from the .env.example file
+func extractEnvKeys(filePath string) []string {
 	file, err := os.Open(filePath)
 	if err != nil {
 		fmt.Println("The file could not be opened", err)
@@ -30,20 +30,20 @@ func extractEnvKeys(filePath string) []string{
 	var envKeys []string
 
 	scanner := bufio.NewScanner(file)
-	for scanner.Scan(){
+	for scanner.Scan() {
 		line := strings.TrimSpace(scanner.Text())
 
-		if line == "" || strings.HasPrefix(line, "#"){
+		if line == "" || strings.HasPrefix(line, "#") {
 			continue
 		}
 
 		key, _, found := strings.Cut(line, "=")
-		if found{
+		if found {
 			envKeys = append(envKeys, key)
-		} 
+		}
 	}
 
-	if err := scanner.Err(); err != nil{
+	if err := scanner.Err(); err != nil {
 		fmt.Println("Error reading file", err)
 	}
 
