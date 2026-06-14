@@ -1,5 +1,25 @@
 package model
 
+type Severity string
+
+const (
+	SeverityInfo    Severity = "info"
+	SeverityWarning Severity = "warning"
+	SeverityBlocker Severity = "blocker"
+)
+
+type CheckType string
+
+const (
+	TypeEnvExists       CheckType = "env_exists"
+	TypeCommandExists   CheckType = "command_exists"
+	TypeFileExists      CheckType = "file_exists"
+	TypeDirectoryExists CheckType = "directory_exists"
+	TypeHttpReachable   CheckType = "http_reachable"
+	TypeTcpReachable    CheckType = "tcp_reachable"
+	TypePortFree        CheckType = "port_free"
+)
+
 // this is the type for each of the checks
 type CheckConfig struct {
 	Name     string            `yaml:"name"`
