@@ -1,5 +1,6 @@
 package model
 
+// these are the levels of severity the system can handle
 type Severity string
 
 const (
@@ -8,6 +9,7 @@ const (
 	SeverityBlocker Severity = "blocker"
 )
 
+// these are the enums for the checks that the system can handle
 type CheckType string
 
 const (
@@ -23,8 +25,8 @@ const (
 // this is the type for each of the checks
 type CheckConfig struct {
 	Name     string            `yaml:"name"`
-	Type     string            `yaml:"type"`
-	Severity string            `yaml:"severity"`
+	Type     CheckType         `yaml:"type"`
+	Severity Severity          `yaml:"severity"`
 	Options  map[string]string `yaml:"options"`
 	Message  string            `yaml:"message"`
 	Why      string            `yaml:"why"`
