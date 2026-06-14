@@ -2,7 +2,7 @@ package detect
 
 import "github.com/allenbiji/clone-sage/internal/model"
 
-func ScanRepo() []model.CheckConfig {
+func ScanRepo() *model.ClonesageConfig {
 	var checks []model.CheckConfig
 
 	checks = append(checks, detectGo()...)
@@ -19,6 +19,9 @@ func ScanRepo() []model.CheckConfig {
 		})
 	}
 
-	return checks
+	return &model.ClonesageConfig{
+		Version: 1,
+		Checks: checks,
+	}
 
 }

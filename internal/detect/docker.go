@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/allenbiji/clone-sage/internal/model"
-	"go.yaml.in/yaml/v3"
+	"gopkg.in/yaml.v3"
 )
 
 // the struct is used to hold the services block and the ports that they use
