@@ -36,6 +36,6 @@ type CheckConfig struct {
 // this is the type for the global clonesage config in its yaml file
 type ClonesageConfig struct {
 	Version  int                    `yaml:"version"`
-	// Defaults map[string]interface{} `yaml:"defaults"` //to be added after more analysis
+	Defaults map[string]interface{} `yaml:"defaults"` 
 	Checks   []CheckConfig          `yaml:"checks"`
 }
