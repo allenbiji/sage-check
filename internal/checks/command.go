@@ -18,13 +18,13 @@ func (c *CommandCheck) Execute() error {
 	if err != nil {
 		return fmt.Errorf("The command %s was not found in your $PATH", c.Command)
 	}
-	
+
 	return nil
 }
 
 //builds command exists factory
 func buildCommandExistsCheck(cfg model.CheckConfig) (registry.Check, error){
-	cmd, ok := cfg.Options["Command"]
+	cmd, ok := cfg.Options["command"]
 	if !ok || cmd == "" {
 		return nil, fmt.Errorf("command_exists check requires a 'Command' option")	
 	}
