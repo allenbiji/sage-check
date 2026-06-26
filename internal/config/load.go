@@ -38,7 +38,24 @@ func Load() (*model.ClonesageConfig, error) {
 	return finalCfg, nil
 }
 
-// this function id used to unmarshal the given file into a clonesageconfig struct
+// LoadFrom loads a single named config file when --config is specified.
+// When customPath is empty it falls back to the standard two-file merge via Load.
+func LoadFrom(customPath string) (*model.ClonesageConfig, error) {
+	if customPath != "" {
+		cfg, err := readConfigFile(customPath)
+		if err != nil {
+			return nil, fmt.Errorf("loading %s: %w", customPath, err)
+		}
+		MergeDefaults(cfg)
+		if err := ValidateConfig(cfg); err != nil {
+			return nil, fmt.Errorf("validating %s: %w", customPath, err)
+		}
+		return cfg, nil
+	}
+	return Load()
+}
+
+// this function is used to unmarshal the given file into a clonesageconfig struct
 func readConfigFile(filename string) (*model.ClonesageConfig, error) {
 	v := viper.New()
 

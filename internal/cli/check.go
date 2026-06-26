@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"fmt"
+	"os"
 
 	"github.com/allenbiji/clone-sage/internal/config"
 	"github.com/allenbiji/clone-sage/internal/engine"
@@ -16,14 +16,14 @@ func NewCheckCmd() *cobra.Command {
 		Use:   "check",
 		Short: "Check the sage.yml file for any errors",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			cfg, err := config.Load()
+			cfg, err := config.LoadFrom(cfgFile)
 			if err != nil {
 				return err
 			}
 
-			success := engine.Run(cfg)
+			success := engine.Run(cfg, isQuickMode)
 			if !success {
-				return fmt.Errorf("")
+				os.Exit(1)
 			}
 			return nil
 		},

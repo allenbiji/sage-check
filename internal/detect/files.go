@@ -9,17 +9,11 @@ import (
 
 // looks for the filename to verify that it exists
 func fileExists(filePath string) bool {
-	file, err := os.Stat(filePath)
-	if os.IsNotExist(err) {
-		fmt.Println("There file is not accessible", err)
-		return false
-	}
-
+	info, err := os.Stat(filePath)
 	if err != nil {
 		return false
 	}
-
-	return !file.IsDir()
+	return !info.IsDir()
 }
 
 // extract the env keys from the .env.example file

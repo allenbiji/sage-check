@@ -18,7 +18,7 @@ const (
 
 // Run executes the diagnostics. It returns true if the environment is healthy
 // (no blockers failed), and false if a blocker failed.
-func Run(cfg *model.ClonesageConfig) bool {
+func Run(cfg *model.ClonesageConfig, quickMode bool) bool {
 	fmt.Println(Cyan + "Running CloneSage Diagnostics...\n" + Reset)
 
 	hasBlockerFailed := false
@@ -27,6 +27,11 @@ func Run(cfg *model.ClonesageConfig) bool {
 
 	// Loop through every check in the YAML
 	for _, checkCfg := range cfg.Checks {
+
+		// In quick mode, skip network checks that require a round-trip.
+		if quickMode && (checkCfg.Type == model.TypeHttpReachable || checkCfg.Type == model.TypeTcpReachable) {
+			continue
+		}
 
 		// Inject global timeout_ms into per-check options if the check doesn't set its own.
 		// Options is a map (reference type), so copy before modifying to avoid mutating cfg.
