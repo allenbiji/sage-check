@@ -9,40 +9,42 @@ import (
 )
 
 type EnvCheck struct {
-	Key string
+	Key    string
+	EnvMap map[string]string
 }
 
-//execute method for the check
 func (e *EnvCheck) Execute() error {
-	envMap, err := detect.ExtractEnvKeys(".env")
-	if err != nil{
-		return fmt.Errorf("There was an error in scanning the .env file")
-	}
-
-	val, exists := envMap[e.Key]
+	val, exists := e.EnvMap[e.Key]
 	if !exists {
-		return fmt.Errorf("Key '%s' does not exist", e.Key)
-	} 
-	if val == "" {
-		return fmt.Errorf("Key '%s' exists but the value is empty", e.Key)
+		return fmt.Errorf("key %q not found in .env", e.Key)
 	}
-
+	if val == "" {
+		return fmt.Errorf("key %q is in .env but has no value", e.Key)
+	}
 	return nil
 }
 
-//build the EnvCheck factory
-func buildEnvExistsCheck(cfg model.CheckConfig) (registry.Check, error){
+// cachedEnvMap holds the parsed .env contents for the lifetime of the process.
+// The factory populates it on first call; all subsequent env_exists checks reuse it.
+var cachedEnvMap map[string]string
+
+func buildEnvExistsCheck(cfg model.CheckConfig) (registry.Check, error) {
 	key, ok := cfg.Options["key"]
 	if !ok || key == "" {
 		return nil, fmt.Errorf("env_exists check requires a 'key' option")
 	}
 
-	return &EnvCheck{
-		Key: key,
-	}, nil
+	if cachedEnvMap == nil {
+		m, err := detect.ExtractEnvKeys(".env")
+		if err != nil {
+			return nil, fmt.Errorf("could not read .env: %w", err)
+		}
+		cachedEnvMap = m
+	}
+
+	return &EnvCheck{Key: key, EnvMap: cachedEnvMap}, nil
 }
 
-//register the check in the registry
-func init(){
+func init() {
 	registry.Register(model.TypeEnvExists, buildEnvExistsCheck)
 }
