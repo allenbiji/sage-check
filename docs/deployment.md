@@ -110,7 +110,7 @@ builds:
 
 archives:
   - id: preboot
-    name_template: "sage_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    name_template: "preboot_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     format_overrides:
       - goos: windows
         format: zip
@@ -231,29 +231,29 @@ brew install allenbiji/tap/preboot
 2. Create `Formula/preboot.rb` in that repo:
 
 ```ruby
-class Sage < Formula
+class Preboot < Formula
   desc "Diagnose local setup failures in Go repositories"
   homepage "https://github.com/allenbiji/preboot"
   version "0.2.0"
 
   on_macos do
     on_arm do
-      url "https://github.com/allenbiji/preboot/releases/download/v#{version}/sage_#{version}_darwin_arm64.tar.gz"
+      url "https://github.com/allenbiji/preboot/releases/download/v#{version}/preboot_#{version}_darwin_arm64.tar.gz"
       sha256 "REPLACE_WITH_SHA256_FROM_CHECKSUMS_TXT"
     end
     on_intel do
-      url "https://github.com/allenbiji/preboot/releases/download/v#{version}/sage_#{version}_darwin_amd64.tar.gz"
+      url "https://github.com/allenbiji/preboot/releases/download/v#{version}/preboot_#{version}_darwin_amd64.tar.gz"
       sha256 "REPLACE_WITH_SHA256_FROM_CHECKSUMS_TXT"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/allenbiji/preboot/releases/download/v#{version}/sage_#{version}_linux_arm64.tar.gz"
+      url "https://github.com/allenbiji/preboot/releases/download/v#{version}/preboot_#{version}_linux_arm64.tar.gz"
       sha256 "REPLACE_WITH_SHA256_FROM_CHECKSUMS_TXT"
     end
     on_intel do
-      url "https://github.com/allenbiji/preboot/releases/download/v#{version}/sage_#{version}_linux_amd64.tar.gz"
+      url "https://github.com/allenbiji/preboot/releases/download/v#{version}/preboot_#{version}_linux_amd64.tar.gz"
       sha256 "REPLACE_WITH_SHA256_FROM_CHECKSUMS_TXT"
     end
   end
@@ -335,10 +335,8 @@ docker push ghcr.io/allenbiji/preboot:v0.2.0
 Before shipping a release, make sure all of the following pass:
 
 ```
-go build ./...           ← binary compiles
-go vet ./...             ← no vet warnings
-go test ./... -race -count=1  ← all tests pass
-goreleaser check         ← GoReleaser config is valid
+make ci              ← build + vet + test
+goreleaser check     ← GoReleaser config is valid
 ```
 
 Add these as a pre-release gate in GitHub Actions by running them in the existing `ci.yml` and making the `release.yml` job depend on `ci.yml` passing first:
@@ -370,7 +368,7 @@ The YAML schema is currently `version: 1`. Increment it if you make breaking cha
 ## Summary: deployment sequence
 
 ```
-1. go test ./... -race     ← tests pass
+1. make ci                 ← tests pass
 2. git tag v0.X.Y          ← create version tag
 3. git push origin vX.X.Y  ← triggers release.yml
 4. GoReleaser:

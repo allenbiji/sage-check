@@ -29,7 +29,6 @@ type CheckConfig struct {
 	Severity Severity          `yaml:"severity"`
 	Options  map[string]string `yaml:"options"`
 	Message  string            `yaml:"message"`
-	Why      string            `yaml:"why"`
 	Fix      string            `yaml:"fix"`
 }
 

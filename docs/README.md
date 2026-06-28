@@ -4,7 +4,7 @@ Welcome to the **Preboot** (`preboot`) documentation. This index links to every 
 
 ## What is Preboot?
 
-Preboot is a Go CLI that diagnoses local setup failures in Go (and polyglot) repositories. Instead of debugging "it works on my machine" by hand, you define — or auto-generate — a YAML file listing health checks for your project, then run a single command to validate the entire environment.
+Preboot is a Go CLI that diagnoses local setup failures in Go repositories. Instead of debugging "it works on my machine" by hand, you define — or auto-generate — a YAML file listing health checks for your project, then run a single command to validate the entire environment.
 
 ```
 preboot check
@@ -13,11 +13,12 @@ preboot check
 A typical run looks like:
 
 ```
-  ____  _      ____  _   _ _____   ____    _    ____ _____
- / ___|| |    / __ \| \ | | ____| / ___|  / \  / ___| ____|
-| |    | |   | |  | |  \| |  _|   \___ \ / _ \| |  _|  _|
-| |___ | |___| |__| | |\  | |___   ___) / ___ \ |_| | |___
- \____||______\____/|_| \_|_____| |____/_/   \_\____|_____|
+  ██████╗ ██████╗ ███████╗██████╗  ██████╗  ██████╗ ████████╗
+  ██╔══██╗██╔══██╗██╔════╝██╔══██╗██╔═══██╗██╔═══██╗╚══██╔══╝
+  ██████╔╝██████╔╝█████╗  ██████╔╝██║   ██║██║   ██║   ██║
+  ██╔═══╝ ██╔══██╗██╔══╝  ██╔══██╗██║   ██║██║   ██║   ██║
+  ██║     ██║  ██║███████╗██████╔╝╚██████╔╝╚██████╔╝   ██║
+  ╚═╝     ╚═╝  ╚═╝╚══════╝╚═════╝  ╚═════╝  ╚═════╝   ╚═╝
 
 Running Preboot Diagnostics...
 
@@ -44,6 +45,7 @@ Running Preboot Diagnostics...
 | [Check Types](checks.md) | All 7 check types with option reference and examples |
 | [Architecture](architecture.md) | Package layout, data flow, extension points |
 | [Contributing](contributing.md) | Dev setup, testing, adding new check types |
+| [Testing Guide](testing.md) | Full test inventory, helpers, and test patterns |
 | [Deployment Guide](deployment.md) | Building, distributing, and shipping Preboot |
 
 ---

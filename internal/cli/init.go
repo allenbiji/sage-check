@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/allenbiji/preboot/internal/detect"
+	"github.com/allenbiji/preboot/internal/engine"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 )
@@ -43,7 +44,9 @@ func NewInitCmd() *cobra.Command {
 			}
 
 			fmt.Fprintln(os.Stderr, "Baseline has been generated successfully in preboot-auto.yml!")
-			fmt.Fprintln(os.Stderr, "Run preboot check to verify your local environment")
+			fmt.Fprintln(os.Stderr, "")
+			fmt.Fprintf(os.Stderr, "Run %s to verify your local environment\n", engine.Colorize(engine.CyanBold, "preboot check"))
+			fmt.Fprintln(os.Stderr, "")
 			return nil
 		},
 	}

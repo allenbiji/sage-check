@@ -81,7 +81,6 @@ type CheckConfig struct {
     Severity Severity          // string alias: "info", "warning", "blocker"
     Options  map[string]string // type-specific key/value pairs
     Message  string
-    Why      string
     Fix      string
 }
 ```

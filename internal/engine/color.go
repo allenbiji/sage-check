@@ -19,3 +19,8 @@ func colorize(code, text string) string {
 	}
 	return code + text + Reset
 }
+
+// Colorize is the exported form of colorize for use outside this package.
+func Colorize(code, text string) string {
+	return colorize(code, text)
+}

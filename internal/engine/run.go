@@ -11,11 +11,12 @@ import (
 
 // ANSI Color Codes for terminal output
 const (
-	Reset  = "\033[0m"
-	Red    = "\033[31m"
-	Green  = "\033[32m"
-	Yellow = "\033[33m"
-	Cyan   = "\033[36m"
+	Reset    = "\033[0m"
+	Red      = "\033[31m"
+	Green    = "\033[32m"
+	Yellow   = "\033[33m"
+	Cyan     = "\033[36m"
+	CyanBold = "\033[1;36m"
 )
 
 // ErrCheckFailed is returned by Run when one or more blocker-severity checks fail.
@@ -26,6 +27,7 @@ var ErrCheckFailed = errors.New("one or more blocker checks failed")
 // or ErrCheckFailed if a blocker check failed.
 func Run(cfg *model.PrebootConfig, quickMode bool) error {
 	fmt.Fprintln(os.Stderr, colorize(Cyan, "Running Preboot Diagnostics..."))
+	fmt.Println()
 
 	hasBlockerFailed := false
 	passedCount := 0
@@ -101,12 +103,14 @@ func Run(cfg *model.PrebootConfig, quickMode bool) error {
 	}
 
 	// Print the Summary
-	fmt.Println("\n----------------------------------------")
+	fmt.Println("----------------------------------------")
 	if hasBlockerFailed {
 		fmt.Printf("%s\n", colorize(Red, fmt.Sprintf("❌ DIAGNOSTICS FAILED: %d passed, %d failed", passedCount, failedCount)))
+		fmt.Println()
 		return ErrCheckFailed
 	}
 
 	fmt.Printf("%s\n", colorize(Green, fmt.Sprintf("✅ DIAGNOSTICS PASSED: %d passed, %d failed (non-blocking)", passedCount, failedCount)))
+	fmt.Println()
 	return nil
 }
