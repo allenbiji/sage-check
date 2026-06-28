@@ -35,7 +35,6 @@ checks:
     options:              # Type-specific key/value pairs (see Check Types).
       key: value
     message: string       # Optional. Custom failure message.
-    why: string           # Optional. Explains why this check matters.
     fix: string           # Optional. Remediation instructions shown on failure.
 ```
 
@@ -127,14 +126,6 @@ Custom message printed when the check fails, instead of the default error from t
 
 ```yaml
 message: "Postgres is not running — start with 'docker compose up db -d'"
-```
-
-#### `why` (string, optional)
-
-Explains the business reason for this check. Currently stored in config but not yet surfaced in CLI output. Useful for documentation purposes.
-
-```yaml
-why: "The payment service requires Redis for distributed locking"
 ```
 
 #### `fix` (string, optional)
