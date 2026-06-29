@@ -113,7 +113,7 @@ func TestHttpReachableCheck_Execute(t *testing.T) {
 	tests := []struct {
 		name    string
 		handler http.HandlerFunc
-		addr    string        // overrides server URL when set
+		addr    string // overrides server URL when set
 		timeout time.Duration
 		wantErr string
 	}{
